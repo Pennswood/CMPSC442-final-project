@@ -1,0 +1,5 @@
+optapy==8.31.1b0
+ipywidgets
+ipyleaflet
+ipysheet
+Flask==2.0.2
