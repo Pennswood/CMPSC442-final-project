@@ -24,8 +24,9 @@ df_copy['ActivityDate'] = df_copy['ActivityDate'].astype('str')
 
 #fetch data using Id and Date
 def get_data(Id, date):
-    #dt = pd.to_datetime(date)
-    idx = df_copy[(df_copy['Id']== Id) & (df_copy['ActivityDate'] == date)]
+    dt = pd.to_datetime(date) #format string to date 
+    dt = dt.strftime('%Y-%m-%d') #reformat the date to remove time
+    idx = df_copy[(df_copy['Id']== Id) & (df_copy['ActivityDate'] == dt)]
     #print(idx) #print specific row based on Id and date
     TotalSteps = idx.at[0, 'TotalSteps']
     TotalDistance = idx.at[0, 'TotalDistance']
@@ -33,10 +34,8 @@ def get_data(Id, date):
     TotalMinutesAsleep = idx.at[0, 'TotalMinutesAsleep']
     return (TotalSteps, TotalDistance, Calories, TotalMinutesAsleep)
 
-
 #print(df_copy.dtypes) #check datatypes
 
-#date must in YYYY-MM-DD format
 w,x,y,z = get_data(1503960366, '2016-04-12')
 print(w,x,y,z)
 
