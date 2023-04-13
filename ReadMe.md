@@ -25,18 +25,18 @@ test.py enables the user to fetch certain data needed by referring to Id and dat
 
 ## ISSUES
 
-Date format - the date format in the csv file is different compared to what is written in the excel file. Still finding way to fix this
+Date format - the date format in the csv file is different compared to what is written in the excel file. We resolve this by using to_datetime() function in pandas. However, the function includes time in their return value, so we had to use strftime() to reformat it. 
 
 ## MAINTAINERS
 
 Current Maintainers:
 
 * Noor Syafiqah Ahmad Sanusi: nxa5282@psu.edu
-* Ahmad Alif Asyraf Abu Bakar: aja 6302@psu.edu
+* Ahmad Alif Asyraf Abu Bakar: aja6302@psu.edu
 
 ## REFERENCES
 
-Below is the websites I used as references for this assignment:
+Below is the websites we used as references for this assignment:
 
 * https://note.nkmk.me/en/python-pandas-multiple-conditions/
 * https://www.geeksforgeeks.org/python-pandas-dataframe-at/
