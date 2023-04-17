@@ -1,0 +1,25 @@
+person,item,start_time,end_time,resources,location
+Normen,Artificial Intelligence,1635,1750,TR,CMPSC
+Normen,Operating System,1335,1450,TR,CMPSC
+Normen,Deep Learning,1325,1415,MWF,CMPSC
+Mark,Stress Management,1010,1100,MW,KINES
+Mark,Numerical Computing,1325,1415,MWF,CMPSC
+Mark,Programming Language Concepts,1430,1520,MWF,CMPSC
+Mark,Operating System,1335,1450,TR,CMPSC
+Mark,Race Ethnicity Culture,1335,1450,TR,SOC
+Mark,Artificial Intelligence,1635,1750,TR,CMPSC
+Noor,Numerical Computing,1325,1415,MWF,CMPSC
+Noor,Operating System,1205,1320,TR,CMPSC
+Noor,Walking,1335,1450,TR,KINES
+Noor,Artificial Intelligence,1635,1750,TR,CMPSC
+Sophia,Programming Language Concepts,1430,1520,MWF,CMPSC
+Sophia,Statistics II,1430,1520,MWF,CMPSC
+Sophia,Database Management,1535,1625,MWF,CMPSC
+Sophia,Technical Writing,1205,1320,TR,CMPSC
+Sophia,Data Structures and Algorithm,1505,1620,TR,CMPSC
+Sophia,Artificial Intelligence,1635,1750,TR,CMPSC
+Ahmed,Environmental Engineering,1220,1310,MWF,ECEE
+Ahmed,Korean,1325,1415,MWF,KOR
+Ahmed,Applied Statistics,1205,1320,TR,KOR
+Ahmed,Korean,1235,1450,TR,KOR
+Ahmed,Artificial Intelligence,1635,1750,TR,CMPSC

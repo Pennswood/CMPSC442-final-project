@@ -1,119 +1,111 @@
 from optapy import constraint_provider
 from optapy.score import HardSoftScore
-from optapy.constraint import Joiners, ConstraintFactory
+from optapy.constraint import ConstraintFactory, Joiners
+from domain import Lesson
+from datetime import datetime, date, timedelta
 
-from domain import Shift, Availability, AvailabilityType
-from datetime import timedelta, datetime
-
-
-def get_start_of_availability(availability: Availability):
-    return datetime.combine(availability.date, datetime.min.time())
+# Trick since timedelta only works with datetime instances
+today = date.today()
 
 
-def get_end_of_availability(availability: Availability):
-    return datetime.combine(availability.date, datetime.max.time())
+def within_30_minutes(lesson1: Lesson, lesson2: Lesson):
+    between = datetime.combine(today, lesson1.timeslot.end_time) - datetime.combine(today, lesson2.timeslot.start_time)
+    return timedelta(minutes=0) <= between <= timedelta(minutes=30)
 
 
-def get_minute_overlap(shift1: Shift, shift2: Shift) -> int:
-    duration_of_overlap: timedelta = min(shift1.end, shift2.end) - max(shift1.start, shift2.start)
-    return int(duration_of_overlap.total_seconds() // 60)
-
-
-def get_shift_duration_in_minutes(shift: Shift) -> int:
-    return int((shift.end - shift.start).total_seconds() // 60)
-
-
+# Type annotation not needed, but allows you to get autocompletion
 @constraint_provider
-def employee_scheduling_constraints(constraint_factory: ConstraintFactory):
+def define_constraints(constraint_factory: ConstraintFactory):
     return [
-        required_skill(constraint_factory),
-        no_overlapping_shifts(constraint_factory),
-        at_least_10_hours_between_two_shifts(constraint_factory),
-        one_shift_per_day(constraint_factory),
-        unavailable_employee(constraint_factory),
-        desired_day_for_employee(constraint_factory),
-        undesired_day_for_employee(constraint_factory),
+        # Hard constraints
+        room_conflict(constraint_factory),
+        neccessary_equipment_conflict(constraint_factory),
+        teacher_conflict(constraint_factory),
+        student_group_conflict(constraint_factory),
+        # Soft constraints
+        teacher_room_stability(constraint_factory),
+        teacher_time_efficiency(constraint_factory),
+        student_group_subject_variety(constraint_factory)
     ]
 
 
-def required_skill(constraint_factory: ConstraintFactory):
+def neccessary_equipment_conflict(constraint_factory: ConstraintFactory):
+    # A room can accommodate at most one lesson at the same time.
     return constraint_factory \
-        .for_each(Shift) \
-        .filter(lambda shift: shift.required_skill not in shift.employee.skill_set) \
-        .penalize("Missing required skill", HardSoftScore.ONE_HARD)
+        .for_each(Lesson) \
+        .filter(lambda lesson: (lesson.student_group == "CMPSC" and "Compute" not in lesson.room.name) or (lesson.student_group != "CMPSC" and "General" not in lesson.room.name))\
+        .penalize("Equipment conflict", HardSoftScore.ONE_HARD)
 
-
-def no_overlapping_shifts(constraint_factory: ConstraintFactory):
+def room_conflict(constraint_factory: ConstraintFactory):
+    # A room can accommodate at most one lesson at the same time.
     return constraint_factory \
-        .for_each_unique_pair(Shift,
-                              Joiners.equal(lambda shift: shift.employee),
-                              Joiners.overlapping(lambda shift: shift.start,
-                                                  lambda shift: shift.end)
-                              ) \
-        .penalize("Overlapping shift", HardSoftScore.ONE_HARD, get_minute_overlap)
-
-
-def at_least_10_hours_between_two_shifts(constraint_factory: ConstraintFactory):
-    TEN_HOURS_IN_SECONDS = 60 * 60 * 10
-    return constraint_factory \
-        .for_each_unique_pair(Shift,
-                              Joiners.equal(lambda shift: shift.employee),
-                              Joiners.less_than_or_equal(lambda shift: shift.end,
-                                                         lambda shift: shift.start)
-                              ) \
-        .filter(lambda first_shift, second_shift:
-                (second_shift.start - first_shift.end).total_seconds() < TEN_HOURS_IN_SECONDS) \
-        .penalize("At least 10 hours between 2 shifts", HardSoftScore.ONE_HARD,
-                  lambda first_shift, second_shift:
-                  (TEN_HOURS_IN_SECONDS - (second_shift.start - first_shift.end).total_seconds()) // 60)
-
-
-def one_shift_per_day(constraint_factory: ConstraintFactory):
-    return constraint_factory \
-        .for_each_unique_pair(Shift,
-                              Joiners.equal(lambda shift: shift.employee),
-                              Joiners.equal(lambda shift: shift.start.date())
-                              ) \
-        .penalize("Max one shift per day", HardSoftScore.ONE_HARD)
-
-
-def unavailable_employee(constraint_factory: ConstraintFactory):
-    return constraint_factory \
-        .for_each(Shift) \
-        .join(Availability,
-              Joiners.equal(lambda shift: shift.employee,
-                            lambda availability: availability.employee),
-              Joiners.equal(lambda shift: shift.start.date(),
-                            lambda availability: availability.date)
+        .for_each(Lesson) \
+        .join(Lesson,
+              # ... in the same timeslot ...
+              Joiners.equal(lambda lesson: lesson.timeslot),
+              # ... in the same room ...
+              Joiners.equal(lambda lesson: lesson.room),
+              # form unique pairs
+              Joiners.less_than(lambda lesson: lesson.id)
               ) \
-        .filter(lambda shift, availability: availability.availability_type == AvailabilityType.UNAVAILABLE) \
-        .penalize('Unavailable employee', HardSoftScore.ONE_HARD,
-                  lambda shift, availability: get_shift_duration_in_minutes(shift))
+        .penalize("Room conflict", HardSoftScore.ONE_HARD)
 
-
-def desired_day_for_employee(constraint_factory: ConstraintFactory):
+def teacher_conflict(constraint_factory: ConstraintFactory):
+    # A teacher can teach at most one lesson at the same time.
     return constraint_factory \
-        .for_each(Shift) \
-        .join(Availability,
-              Joiners.equal(lambda shift: shift.employee,
-                            lambda availability: availability.employee),
-              Joiners.equal(lambda shift: shift.start.date(),
-                            lambda availability: availability.date)
+        .for_each(Lesson) \
+        .join(Lesson,
+              Joiners.equal(lambda lesson: lesson.timeslot),
+              Joiners.equal(lambda lesson: lesson.teacher),
+              Joiners.less_than(lambda lesson: lesson.id)
               ) \
-        .filter(lambda shift, availability: availability.availability_type == AvailabilityType.DESIRED) \
-        .reward('Desired day for employee', HardSoftScore.ONE_SOFT,
-                lambda shift, availability: get_shift_duration_in_minutes(shift))
+        .penalize("Teacher conflict", HardSoftScore.ONE_HARD)
 
 
-def undesired_day_for_employee(constraint_factory: ConstraintFactory):
+def student_group_conflict(constraint_factory: ConstraintFactory):
+    # A student can attend at most one lesson at the same time.
     return constraint_factory \
-        .for_each(Shift) \
-        .join(Availability,
-              Joiners.equal(lambda shift: shift.employee,
-                            lambda availability: availability.employee),
-              Joiners.equal(lambda shift: shift.start.date(),
-                            lambda availability: availability.date)
+        .for_each(Lesson) \
+        .join(Lesson,
+              Joiners.equal(lambda lesson: lesson.timeslot),
+              Joiners.equal(lambda lesson: lesson.student_group),
+              Joiners.less_than(lambda lesson: lesson.id)
               ) \
-        .filter(lambda shift, availability: availability.availability_type == AvailabilityType.UNDESIRED) \
-        .penalize('Undesired day for employee', HardSoftScore.ONE_SOFT,
-                  lambda shift, availability: get_shift_duration_in_minutes(shift))
+        .penalize("Student group conflict", HardSoftScore.ONE_HARD)
+
+
+def teacher_room_stability(constraint_factory: ConstraintFactory):
+    # A teacher prefers to teach in a single room.
+    return constraint_factory \
+        .for_each(Lesson) \
+        .join(Lesson,
+              Joiners.equal(lambda lesson: lesson.teacher),
+              Joiners.less_than(lambda lesson: lesson.id)
+              ) \
+        .filter(lambda lesson1, lesson2: lesson1.room != lesson2.room) \
+        .penalize("Teacher room stability", HardSoftScore.ONE_SOFT)
+
+
+def teacher_time_efficiency(constraint_factory: ConstraintFactory):
+    # A teacher prefers to teach sequential lessons and dislikes gaps between lessons.
+    return constraint_factory \
+        .for_each(Lesson) \
+        .join(Lesson,
+              Joiners.equal(lambda lesson: lesson.teacher),
+              Joiners.equal(lambda lesson: lesson.timeslot.day_of_week)
+              ) \
+        .filter(within_30_minutes) \
+        .reward("Teacher time efficiency", HardSoftScore.ONE_SOFT)
+
+
+def student_group_subject_variety(constraint_factory: ConstraintFactory):
+    # A student group dislikes sequential lessons on the same subject.
+    return constraint_factory \
+        .for_each(Lesson) \
+        .join(Lesson,
+              Joiners.equal(lambda lesson: lesson.subject),
+              Joiners.equal(lambda lesson: lesson.student_group),
+              Joiners.equal(lambda lesson: lesson.timeslot.day_of_week)
+              ) \
+        .filter(within_30_minutes) \
+        .penalize("Student group subject variety", HardSoftScore.ONE_SOFT)
