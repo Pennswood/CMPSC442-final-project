@@ -7,7 +7,7 @@ from optapy import problem_fact, planning_id, planning_entity, planning_variable
     value_range_provider, planning_score
 from optapy.types import HardSoftScore
 from datetime import time
-
+from additional_todo import todo
 
 @problem_fact
 class Room:
@@ -157,25 +157,28 @@ def generate_problem():
     for index, row in our_schedule.iterrows():
         lesson_list.append(Lesson(index, row["item"], row["person"], row["location"]))
 
+    # Adds things to the lesson list
+    todo(Lesson, lesson_list)
+
     timeslot_list = [
         Timeslot(1, "SATURDAY", time(hour=8, minute=30), time(hour=9, minute=30)),
         Timeslot(2, "SATURDAY", time(hour=9, minute=30), time(hour=10, minute=30)),
         Timeslot(3, "SATURDAY", time(hour=10, minute=30), time(hour=11, minute=30)),
-        Timeslot(4, "SATURDAY", time(hour=13, minute=30), time(hour=14, minute=30)),
-        Timeslot(5, "SATURDAY", time(hour=14, minute=30), time(hour=15, minute=30)),
-        Timeslot(6, "SATURDAY", time(hour=15, minute=30), time(hour=16, minute=30)),
-        Timeslot(7, "SATURDAY", time(hour=16, minute=30), time(hour=17, minute=30)),
-        Timeslot(8, "SATURDAY", time(hour=17, minute=30), time(hour=18, minute=30)),
-        Timeslot(9, "SATURDAY", time(hour=18, minute=30), time(hour=19, minute=30)),
+        Timeslot(4, "SATURDAY", time(hour=11, minute=30), time(hour=12, minute=30)),
+        Timeslot(5, "SATURDAY", time(hour=12, minute=30), time(hour=13, minute=30)),
+        Timeslot(6, "SATURDAY", time(hour=13, minute=30), time(hour=14, minute=30)),
+        Timeslot(7, "SATURDAY", time(hour=14, minute=30), time(hour=15, minute=30)),
+        Timeslot(8, "SATURDAY", time(hour=15, minute=30), time(hour=16, minute=30)),
+        Timeslot(9, "SATURDAY", time(hour=16, minute=30), time(hour=17, minute=30)),
         Timeslot(10, "SUNDAY", time(hour=8, minute=30), time(hour=9, minute=30)),
         Timeslot(11, "SUNDAY", time(hour=9, minute=30), time(hour=10, minute=30)),
         Timeslot(12, "SUNDAY", time(hour=10, minute=30), time(hour=11, minute=30)),
-        Timeslot(13, "SUNDAY", time(hour=13, minute=30), time(hour=14, minute=30)),
-        Timeslot(14, "SUNDAY", time(hour=14, minute=30), time(hour=15, minute=30)),
-        Timeslot(15, "SUNDAY", time(hour=15, minute=30), time(hour=16, minute=30)),
-        Timeslot(16, "SUNDAY", time(hour=16, minute=30), time(hour=17, minute=30)),
-        Timeslot(17, "SUNDAY", time(hour=17, minute=30), time(hour=18, minute=30)),
-        Timeslot(18, "SUNDAY", time(hour=18, minute=30), time(hour=19, minute=30)),
+        Timeslot(13, "SUNDAY", time(hour=11, minute=30), time(hour=12, minute=30)),
+        Timeslot(14, "SUNDAY", time(hour=12, minute=30), time(hour=13, minute=30)),
+        Timeslot(15, "SUNDAY", time(hour=13, minute=30), time(hour=14, minute=30)),
+        Timeslot(16, "SUNDAY", time(hour=14, minute=30), time(hour=15, minute=30)),
+        Timeslot(17, "SUNDAY", time(hour=15, minute=30), time(hour=16, minute=30)),
+        Timeslot(18, "SUNDAY", time(hour=16, minute=30), time(hour=17, minute=30)),
     ]
     room_list = [
         Room(1, "Compute_1"),
@@ -183,6 +186,9 @@ def generate_problem():
         Room(3, "Compute_3"),
         Room(4, "General_1"),
         Room(5, "General_2"),
+        Room(6, "Cafe_1"),
+        Room(7, "Cafe_2"),
+        Room(8, "Cafe_3")
     ]
     lesson = lesson_list[0]
     lesson.set_timeslot(timeslot_list[0])
