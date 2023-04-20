@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd 
 import csv 
 import openpyxl
+import seaborn
+import matplotlib.pyplot as plt
 
 #read and store the excel  file
 data_xlsx = pd.read_excel(
@@ -34,8 +36,28 @@ def get_data(Id, date):
     TotalMinutesAsleep = idx.at[0, 'TotalMinutesAsleep']
     return (TotalSteps, TotalDistance, Calories, TotalMinutesAsleep)
 
+def get_data_byname(name, date):
+    dt = pd.to_datetime(date) #format string to date 
+    dt = dt.strftime('%Y-%m-%d') #reformat the date to remove time
+    idx = df_copy[(df_copy['Name']== name) & (df_copy['ActivityDate'] == dt)]
+    #print(idx) #print specific row based on name and date
+    TotalSteps = idx.at[0, 'TotalSteps']
+    TotalDistance = idx.at[0, 'TotalDistance']
+    Calories = idx.at[0, 'Calories']
+    TotalMinutesAsleep = idx.at[0, 'TotalMinutesAsleep']
+    return (TotalSteps, TotalDistance, Calories, TotalMinutesAsleep)
+
 #print(df_copy.dtypes) #check datatypes
 
-w,x,y,z = get_data(1503960366, '2016-04-12')
-print(w,x,y,z)
+'''
+def total(col):
+	col = col.value_counts()
+	#unique values
+	idx = col.index
+	#total count per unique values
+	ct = col
+	return(idx.values, ct.values)
 
+p,q = total(df_copy['ActivityDate'])
+print(p,q)
+'''
