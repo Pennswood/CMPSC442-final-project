@@ -17,6 +17,6 @@ def todo(Lesson, lesson_list):
             lesson_list.append(Lesson(len(lesson_list), "Meal_2", p, "MEAL_2")) 
         if ((TotalSteps_2 < 5000) or (TotalDistance_2 < 5)): 
             lesson_list.append(Lesson(len(lesson_list), "Exercise_2", p, "EXERCISE_2"))
-        if ((TotalMinutesAsleep_2 < 240)  or (TotalSteps_1 > 25000) or (TotalDistance_1 > 15 )):
+        if ((TotalMinutesAsleep_2 < 240)  or (TotalSteps_2 > 25000) or (TotalDistance_2 > 15 )):
             lesson_list.append(Lesson(len(lesson_list), "Sleep_2", p, "SLEEP_2")) 
     pass
