@@ -21,6 +21,7 @@ def define_constraints(constraint_factory: ConstraintFactory):
         room_conflict(constraint_factory),
         neccessary_equipment_conflict(constraint_factory),
         teacher_conflict(constraint_factory),
+        same_day_constraint(constraint_factory),
         # lunch_constraint(constraint_factory),
         # Soft constraints
         student_group_conflict(constraint_factory),
@@ -46,6 +47,13 @@ def lunch_constraint(constraint_factory: ConstraintFactory):
         .filter(lambda lesson: (lesson.timeslot.start_time<datetime.time(hour=11) or lesson.timeslot.start_time>datetime.time(hour=14)) \
             and  (lesson.student_group == "LUNCH")) \
         .penalize("Lunch conflict", HardSoftScore.ONE_HARD)
+
+def same_day_constraint(constraint_factory: ConstraintFactory):
+    # A room can accommodate at most one lesson at the same time.
+    return constraint_factory \
+        .for_each(Lesson) \
+        .filter(lambda lesson: (lesson.student_group[-2:] == "_1" and ("SATURDAY" not in str(lesson.timeslot))) or (lesson.student_group[-2:] == "_2" and ("SUNDAY" not in str(lesson.timeslot)))) \
+        .penalize("Day conflict", HardSoftScore.ONE_HARD)
 
 def room_conflict(constraint_factory: ConstraintFactory):
     # A room can accommodate at most one lesson at the same time.
