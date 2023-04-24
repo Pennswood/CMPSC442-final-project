@@ -6,11 +6,11 @@ import seaborn
 import matplotlib.pyplot as plt
 
 #read and store the excel  file
-data_xlsx = pd.read_excel(
-	'Merged.xlsx')
+# data_xlsx = pd.read_excel(
+# 	'Merged.xlsx')
 
 #write excel into csv
-data_xlsx.to_csv('Merged.csv', index = None, header = True)
+# data_xlsx.to_csv('Merged.csv', index = None, header = True)
 
 #convert to dataframe 
 df = pd.DataFrame(pd.read_csv('Merged.csv'))
