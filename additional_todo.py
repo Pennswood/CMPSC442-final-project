@@ -3,8 +3,8 @@ import getData #previously test.py
 def todo(Lesson, lesson_list):
     people = ['Sophie', 'Mark', 'Ahmad', 'Normen', 'Noor']
     for p in people:
-        TotalSteps_1, TotalDistance_1, Calories_1, TotalMinutesAsleep_1 = getData.get_data_byname(p, '2016-04-29') 
-        TotalSteps_2, TotalDistance_2, Calories_2, TotalMinutesAsleep_2 = getData.get_data_byname(p, '2016-04-30') 
+        TotalSteps_1, TotalDistance_1, Calories_1, TotalMinutesAsleep_1 = getData.get_data_byname(p, '4/29/2016') 
+        TotalSteps_2, TotalDistance_2, Calories_2, TotalMinutesAsleep_2 = getData.get_data_byname(p, '4/30/2016') 
         #lesson_list.append(Lesson(len(lesson_list), "Study", p, "Study"))
         if (Calories_1 < 1000):
             lesson_list.append(Lesson(len(lesson_list), "Meal_1", p, "MEAL_1")) #combine lunch/dinner/breakfast
