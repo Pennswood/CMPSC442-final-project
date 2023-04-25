@@ -42,8 +42,6 @@ This is a diagram of our system design implementation.
     - Students of the class can study together
     - Teachers can choose to be in the same room for multiple classes
     - Students may prefer not to study back-to-back in their schedule
-- constraints.py has the list of constraints
-- additional_todo.py has the set of rules for RBES (I think)
 
 ### Data Used:
 - We used Fitbit data (from Kaggle) to source data for many different things, like:
@@ -55,4 +53,5 @@ This is a diagram of our system design implementation.
 - For OptaPy:
   - [Install Python 3.9 or later.](https://www.python.org/downloads/)
   - [Install JDK 11 or later](https://adoptium.net/) with the environment variable `JAVA_HOME` configured to the JDK installation directory.
-- The constraints defined for OptaPy are defined in constraints.py.
+- Add/edit any constraints for OptaPy in constraints.py.
+- Add/edit any rules for RBES in additional_todo.py
