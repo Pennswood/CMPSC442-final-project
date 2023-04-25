@@ -32,4 +32,5 @@ This is a diagram of our system design.
 - 
 
 ---
-# Instructions
+# Instructions For Using Program
+- [Install Python 3.9 or later](https://www.python.org/downloads/)
