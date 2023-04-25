@@ -28,11 +28,31 @@ The Smart Planner was created to help students who have overwhelming schedules. 
 ---
 # **Design and Implementation**
 ![diagram](readmeDiagram.png)
-This is a diagram of our system design.
+This is a diagram of our system design implementation.
 ### Methods Used:
-- 
+- We used both OptaPy and RBES to generate the schedule.
+  - OptaPy uses constraints to solve optimization problems, like scheduling.
+  - RBES creates recommendations based on a set of rules, which can be updated.
+- We created a set of constraints for OptaPy, including hard constraints and soft constraints.
+  - Hard constraints (must be inforced):
+    - Two students cannot use the same room at the same time
+    - Rooms must be used for the appropriate tasks
+    - A teacher cannot teach two classes at the same time
+  - Soft constraints (do not necessarily have to be enforced):
+    - Students of the class can study together
+    - Teachers can choose to be in the same room for multiple classes
+    - Students may prefer not to study back-to-back in their schedule
+- constraints.py has the list of constraints
+- additional_todo.py has the set of rules for RBES (I think)
+
+### Data Used:
+- We used Fitbit data (from Kaggle) to source data for many different things, like:
+  - Steps walked, active minutes, calories, minutes asleep, and more.
+- We also used data from some group members, of their class schedules for a week.
 
 ---
 # Instructions For Using Program
-- [Install Python 3.9 or later](https://www.python.org/downloads/)
-  - [Install this](https://www.python.org)
+- For OptaPy:
+  - [Install Python 3.9 or later.](https://www.python.org/downloads/)
+  - [Install JDK 11 or later](https://adoptium.net/) with the environment variable `JAVA_HOME` configured to the JDK installation directory.
+- The constraints defined for OptaPy are defined in constraints.py.
