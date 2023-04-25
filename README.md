@@ -10,6 +10,7 @@ The Smart Planner was created to help students who have overwhelming schedules. 
 
 ### Goals
 - Create a schedule that maximizes productivity, given a to-do list and a person's health/mood.
+  - Health and mood will be based on things like heart rate, amount of sleep, etc.
 - Define the exact objective function.
 - Identify good data and strategies, to find the best possible schedule.
 
@@ -34,3 +35,4 @@ This is a diagram of our system design.
 ---
 # Instructions For Using Program
 - [Install Python 3.9 or later](https://www.python.org/downloads/)
+  - [Install this](https://www.python.org)
