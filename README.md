@@ -73,3 +73,65 @@ This is a diagram of our system design implementation.
 - Add/edit any data in `schedule.csv` and `Merged.csv`.
 
 ### Running the Application:
+1. Git clone the optapy-quickstarts repo and navigate to this directory:
+```
+$ git clone https://github.com/optapy/optapy-quickstarts.git
+$ cd optapy-quickstarts/school-timetabling
+```
+2. Activate a virtual environment
+```
+$ python -m venv venv
+$ . venv/bin/activate
+```
+3. Install the quickstart requirements to the virtual environment
+```
+$ pip install -r requirements.txt
+```
+4. Run the application
+```
+$ python main.py
+```
+Optapy will solve the schedule and print it when finished:
+|------------|------------|------------|------------|
+|            | Room A     | Room B     | Room C     |
+|------------|------------|------------|------------|
+| SAT 08:30: |            | Math       | History    |
+|            |            | A. Turing  | I. Jones   | NEED TO EDIT THIS STILL
+|            |            | 9th grade  | 10th grade |
+|------------|------------|------------|------------|
+| SAT 09:30: |            | Math       | History    |
+|            |            | A. Turing  | I. Jones   |
+|            |            | 10th grade | 9th grade  |
+|------------|------------|------------|------------|
+| SAT 10:30: |            | Math       | English    |
+|            |            | A. Turing  | I. Jones   |
+|            |            | 10th grade | 9th grade  |
+|------------|------------|------------|------------|
+| SAT 11:30: | Math       | Spanish    |            |
+|            | A. Turing  | P. Cruz    |            |
+|            | 10th grade | 9th grade  |            |
+|------------|------------|------------|------------|
+| SAT 12:30: | Math       | English    |            |
+|            | A. Turing  | P. Cruz    |            |
+|            | 9th grade  | 10th grade |            |
+|------------|------------|------------|------------|
+| SAT 13:30: | Physics    | Spanish    |            |
+|            | M. Curie   | P. Cruz    |            |
+|            | 9th grade  | 10th grade |            |
+|------------|------------|------------|------------|
+| SAT 14:30: | Chemistry  |            | English    |
+|            | M. Curie   |            | I. Jones   |
+|            | 10th grade |            | 9th grade  |
+|------------|------------|------------|------------|
+| SAT 15:30: | Physics    | Spanish    |            |
+|            | M. Curie   | P. Cruz    |            |
+|            | 10th grade | 9th grade  |            |
+|------------|------------|------------|------------|
+| SAT 16:30: | French     |            | Biology    |
+|            | M. Curie   |            | C. Darwin  |
+|            | 10th grade |            | 9th grade  |
+|------------|------------|------------|------------|
+| TUE 14:30: | Chemistry  | Geography  |            |
+|            | M. Curie   | C. Darwin  |            |
+|            | 9th grade  | 10th grade |            |
+|------------|------------|------------|------------|
