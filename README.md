@@ -98,25 +98,18 @@ $ pip install -r requirements.txt
 ```
 $ python main.py
 ```
-Optapy will solve the schedule and print out an optimized schedule when finished.
-
----
-### Testing the Application
-1. Git clone the optapy-quickstarts repo and navigate to this directory:
+5. To run the application with our sample data, switch to the CMPSC442-final-project directory
 ```
-$ git clone https://github.com/optapy/optapy-quickstarts.git
-$ cd optapy-quickstarts/school-timetabling
+$ cd
+$ cd CMPSC442-final-project
 ```
-2. Activate a virtual environment
+6. Install the quickstart requirements to the virtual environment
 ```
-$ python -m venv venv
-$ . venv/bin/activate
+pip install -r requirements.txt
 ```
-3. Install the quickstart requirements and a testing framework to the virtual environment
+7. Run the application (now with our data)
 ```
-$ pip install -r requirements.txt pytest
+python main.py
 ```
-4. Run the tests
-```
-$ python -m pytest tests.py
-```
+The output will include a schedule using our data, like the one below:
+![output](sampleOutput.png)
