@@ -112,4 +112,4 @@ pip install -r requirements.txt
 python main.py
 ```
 The output will include a schedule using our data, like the one below:
-![output](sampleOutput.png)
+![output](sampleOutput.PNG)
