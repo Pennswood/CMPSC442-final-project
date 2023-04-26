@@ -61,7 +61,7 @@ This is a diagram of our system design implementation.
   - Steps walked, active minutes, calories, minutes asleep, and more.
 - We also used data from some group members, of their class schedules for a week.
   - The class schedule data is in the file [`schedule.csv`](schedule.csv).
-- The Fitbit data was merged with the class schedule data.
+- The Fitbit data was narrowed down and some of the students' names were assigned to user IDs from the Kaggle data.
   - The merged data can be seen in the file [`Merged.csv`](Merged.csv).
 
 ---
