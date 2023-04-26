@@ -105,11 +105,11 @@ $ cd CMPSC442-final-project
 ```
 6. Install the quickstart requirements to the virtual environment
 ```
-pip install -r requirements.txt
+$ pip install -r requirements.txt
 ```
 7. Run the application (now with our data)
 ```
-python main.py
+$ python main.py
 ```
 The output will include a schedule using our data, like the one below:
 ![output](sampleOutput.PNG)
