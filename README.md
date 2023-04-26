@@ -38,12 +38,12 @@ This is a diagram of our system design implementation.
     - We updated this method to instead generate a user's schedule based on constraints.
   - We created a set of constraints for OptaPy (which can be seen in `constraints.py`):
     - Hard constraints (must be inforced):
-      - Two students cannot use the same room at the same time
+      - Rooms have limits to how many students can be in them at one time
       - Rooms must be used for the appropriate tasks
-      - A teacher cannot teach two classes at the same time
+      - A student cannot take two classes at the same time
     - Soft constraints (do not necessarily have to be enforced):
-      - Students of the class can study together
-      - Teachers can choose to be in the same room for multiple classes
+      - Students of the class may prefer to study together
+      - Students may prefer to be in the same room for multiple classes
       - Students may prefer not to study back-to-back in their schedule
 - RBES (Rule-Based Expert System)
   - RBES creates recommendations based on a set of rules, which can be updated.
@@ -53,7 +53,7 @@ This is a diagram of our system design implementation.
     - If total steps are less than 5,000 or total distance is less than 5 miles, add exercise
     - If minutes asleep are less than 240, or total steps are greater than 25,000, or total distance is greater than 15 miles, add sleep
 - How OptaPy and RBES were brought together:
-  - 
+  - The fitbit data and student schedules are put through the RBES rules, which creates a lesson plan. This plan is put through the constraints from OptaPy. Together, they make an optimized schedule.
 
 ### Data Used:
 - We used Fitbit data (from Kaggle) to source data for many different things, like:
@@ -65,9 +65,11 @@ This is a diagram of our system design implementation.
 
 ---
 # Instructions For Using Program
-- For OptaPy:
+- Requirements for OptaPy:
   - [Install Python 3.9 or later.](https://www.python.org/downloads/)
   - [Install JDK 11 or later](https://adoptium.net/) with the environment variable `JAVA_HOME` configured to the JDK installation directory.
+
+### Changing Application Data:
 - Add/edit any constraints for OptaPy in `constraints.py`.
 - Add/edit any rules for RBES in `additional_todo.py`.
 - Add/edit any data in `schedule.csv` and `Merged.csv`.
@@ -91,4 +93,25 @@ $ pip install -r requirements.txt
 ```
 $ python main.py
 ```
-Optapy will solve the schedule and print it when finished:
+Optapy will solve the schedule and print out an optimized schedule when finished.
+
+---
+### Testing the Application:
+1. Git clone the optapy-quickstarts repo and navigate to this directory:
+```
+$ git clone https://github.com/optapy/optapy-quickstarts.git
+$ cd optapy-quickstarts/school-timetabling
+```
+2. Activate a virtual environment
+```
+$ python -m venv venv
+$ . venv/bin/activate
+```
+3. Install the quickstart requirements and a testing framework to the virtual environment
+```
+$ pip install -r requirements.txt pytest
+```
+4. Run the tests
+```
+$ python -m pytest tests.py
+```
