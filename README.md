@@ -6,6 +6,59 @@ By Normen Yu, Kiernan Lavelle, Ahmad Bakar, Mark Vernachio, Noor Sanusi, and Sop
 The Smart Planner was created to help students who have overwhelming schedules. The goal was to create an optimized schedule for students, by prioritizing classes and health. 
 
 ---
+# Quickstart
+
+## Instructions For Using Program
+- Requirements for OptaPy:
+  - [Install Python 3.9 or later.](https://www.python.org/downloads/)
+  - [Install JDK 11 or later](https://adoptium.net/) with the environment variable `JAVA_HOME` configured to the JDK installation directory.
+
+1. Git clone the optapy-quickstarts repo and navigate to this directory:
+```
+$ git clone https://github.com/optapy/optapy-quickstarts.git
+$ cd optapy-quickstarts/school-timetabling
+```
+2. Activate a virtual environment
+```
+$ python -m venv venv
+$ . venv/bin/activate
+```
+3. Install the quickstart requirements to the virtual environment
+```
+$ pip install -r requirements.txt
+```
+4. Run the application
+```
+$ python main.py
+```
+5. To run the application with our sample data, switch to the CMPSC442-final-project directory
+```
+$ cd
+$ cd CMPSC442-final-project
+```
+6. Install the quickstart requirements to the virtual environment
+```
+$ pip install -r requirements.txt
+```
+7. Run the application (now with our data)
+```
+$ python main.py
+```
+The output will include a schedule using our data, like the one below:
+![output](sampleOutput.PNG)
+
+# Files architecture
+
+### Sample Input Data
+- The file [`Merged.csv`](Merged.csv) contains sample health data, including total steps, calories, and more.
+- The file [`schedule.csv`](schedule.csv) contains sample input data for students' schedules.
+
+### Changing Application Data
+- Add/edit any hand and soft constraints for OptaPy in [`constraints.py`](constraints.py).
+- Add/edit any rules for RBES in [`additional_todo.py`](additional_todo.py).
+- Add/edit any data in [`schedule.csv`](schedule.csv) and [`Merged.csv`](Merged.csv).
+- The entry point and terminal output or visual effects of the program comes from ['main/py'](main.py).
+- Key object definitions and infrastructure backbone definitions (such as the representation of rooms, students, and schedules) are definied in ['domain.py'](domain.py).
 
 # **Goals, Environment, and Adaptation**
 
@@ -64,52 +117,5 @@ This is a diagram of our system design implementation.
 - The Fitbit data was narrowed down and some of the students' names were assigned to user IDs from the Kaggle data.
   - The merged data can be seen in the file [`Merged.csv`](Merged.csv).
 
----
-# Instructions For Using Program
-- Requirements for OptaPy:
-  - [Install Python 3.9 or later.](https://www.python.org/downloads/)
-  - [Install JDK 11 or later](https://adoptium.net/) with the environment variable `JAVA_HOME` configured to the JDK installation directory.
 
-### Sample Input Data
-- The file [`Merged.csv`](Merged.csv) contains sample health data, including total steps, calories, and more.
-- The file [`schedule.csv`](schedule.csv) contains sample input data for students' schedules.
 
-### Changing Application Data
-- Add/edit any constraints for OptaPy in [`constraints.py`](constraints.py).
-- Add/edit any rules for RBES in [`additional_todo.py`](additional_todo.py).
-- Add/edit any data in [`schedule.csv`](schedule.csv) and [`Merged.csv`](Merged.csv).
-
-### Running the Application
-1. Git clone the optapy-quickstarts repo and navigate to this directory:
-```
-$ git clone https://github.com/optapy/optapy-quickstarts.git
-$ cd optapy-quickstarts/school-timetabling
-```
-2. Activate a virtual environment
-```
-$ python -m venv venv
-$ . venv/bin/activate
-```
-3. Install the quickstart requirements to the virtual environment
-```
-$ pip install -r requirements.txt
-```
-4. Run the application
-```
-$ python main.py
-```
-5. To run the application with our sample data, switch to the CMPSC442-final-project directory
-```
-$ cd
-$ cd CMPSC442-final-project
-```
-6. Install the quickstart requirements to the virtual environment
-```
-$ pip install -r requirements.txt
-```
-7. Run the application (now with our data)
-```
-$ python main.py
-```
-The output will include a schedule using our data, like the one below:
-![output](sampleOutput.PNG)
