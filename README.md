@@ -57,8 +57,8 @@ The output will include a schedule using our data, like the one below:
 - Add/edit any hand and soft constraints for OptaPy in [`constraints.py`](constraints.py).
 - Add/edit any rules for RBES in [`additional_todo.py`](additional_todo.py).
 - Add/edit any data in [`schedule.csv`](schedule.csv) and [`Merged.csv`](Merged.csv).
-- The entry point and terminal output or visual effects of the program comes from ['main/py'](main.py).
-- Key object definitions and infrastructure backbone definitions (such as the representation of rooms, students, and schedules) are definied in ['domain.py'](domain.py).
+- The entry point and terminal output or visual effects of the program comes from [`main/py`](main.py).
+- Key object definitions and infrastructure backbone definitions (such as the representation of rooms, students, and schedules) are definied in [`domain.py`](domain.py).
 
 # **Goals, Environment, and Adaptation**
 
