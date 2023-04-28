@@ -60,13 +60,13 @@ The output will include a schedule using our data, like the one below:
 - The entry point and terminal output or visual effects of the program comes from [`main/py`](main.py).
 - Key object definitions and infrastructure backbone definitions (such as the representation of rooms, students, and schedules) are definied in [`domain.py`](domain.py).
 
-# **Goals, Environment, and Adaptation**
+# Goals, Environment, and Adaptation
 
 ### Goals
 - Create a schedule that maximizes productivity, given a to-do list and a person's health/mood.
   - Health and mood will be based on things like heart rate, amount of sleep, etc.
 - Define the exact objective function.
-- Identify good data and strategies, to find the best possible schedule.
+- Identify good data and strategies to find the best possible schedule.
 
 ### Environment
 - It would be a Smart Planner App, that could be used on a phone, computer, etc.
@@ -76,8 +76,10 @@ The output will include a schedule using our data, like the one below:
 - Be able to reschedule tasks in the schedule accordingly, based on data received and priority levels. 
 
 ### Adaptation
-- In the future, we seek to design data collection strategies to identify how productive users while using the schedule our planner creates.
-- Once a week (or at the command of an administrator), the pipeline will cycle through data and make adjustments to training weights or RBES logic to deal with temporal difference and societal changes that may affect the schedule.
+- The algorithm adapts to environment changes through the health dataset to optimize each person’s schedule based on their needs.
+- In the future, we seek to design data collection strategies to identify whether strategies are working for a feedback loop.
+- Once a week (or at the command of an administrator), the pipeline will cycle through data and make adjustments to RBES logic to deal with temporal difference and societal changes that may affect the schedule.
+  - Weather pattern changes, amount of sunlight, work-from-home habits, technological advancements, and cultural changes can all impact each person’s productivity, and how they use their time wisely. DevOps pipeline must be designed to adapt to these changes.
 
 ---
 # **Design and Implementation**
@@ -91,7 +93,7 @@ This is a diagram of our system design implementation.
   - OptaPy has a method called "room assignments," which assigns teachers' classes timeslots to rooms in schools.
     - We updated this method to instead generate a user's schedule based on constraints.
   - We created a set of constraints for OptaPy (which can be seen in [`constraints.py`](constraints.py)):
-    - Hard constraints (must be inforced):
+    - Hard constraints (must be enforced):
       - Rooms have limits to how many students can be in them at one time
       - Rooms must be used for the appropriate tasks
       - A student cannot take two classes at the same time
