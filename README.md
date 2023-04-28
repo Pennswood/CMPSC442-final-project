@@ -118,6 +118,8 @@ This is a diagram of our system design implementation.
   - The class schedule data is in the file [`schedule.csv`](schedule.csv).
 - The Fitbit data was narrowed down and some of the students' names were assigned to user IDs from the Kaggle data.
   - The merged data can be seen in the file [`Merged.csv`](Merged.csv).
+### Putting everything together
+[`domain.py`](domain.py) pulls everything together. The [`schedule.csv`](schedule.csv) gets pulled in through [`domain.py`](domain.py), which parses the data and generates the neccessary review sessions.  [`domain.py`](domain.py) calls [`additional_todo.py`](additional_todo.py), which pulls in [`Merged.csv`](Merged.csv) and calculates additional to-dos. Some additional constraints (such as avaliable rooms and timeslots) are hardcoded in [`domain.py`](domain.py) as well. The Object Oriented data architecture for each constraint objects, students, is specified under [`domain.py`](domain.py) as well.
 
-
+In the final step, the data architecture and specific values are pulled in from [`domain.py`](domain.py) into [`main.py`](main.py), which also pulls in the "objective function" from [`constraints.py`](constraints.py). [`main.py`](main.py) ultiamtely gets called by a user, and is also responsible for generating the graphical user interface when all is said and done.
 
